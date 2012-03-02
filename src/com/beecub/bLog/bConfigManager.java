@@ -3,7 +3,7 @@ package com.beecub.bLog;
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
-import org.bukkit.util.config.Configuration;
+import org.bukkit.configuration.Configuration;
 
 public class bConfigManager {
 	
@@ -19,24 +19,17 @@ public class bConfigManager {
     	this.bLog = bLog;
 
     	File f = new File(bLog.getDataFolder(), "config.yml");
-    	conf = null;
+    	conf = bLog.getConfig();
 
-        if (f.exists())
-        {
-        	conf = new Configuration(f);
-        	conf.load();
-        }
-        else {
-        	this.confFile = new File(bLog.getDataFolder(), "config.yml");
-            this.conf = new Configuration(confFile);
-            conf.save();
+        if (!f.exists()){
+    		conf.options().copyDefaults(true);
+            bLog.saveConfig();
         }
         new File(bLog.getDataFolder() + "/ChatLog/").mkdir();
         new File(bLog.getDataFolder() + "/CommandLog/").mkdir();
     }    
     
 	private static void load() {
-    	conf.load();
     	toChat();
     	noCommand();
     }
@@ -47,12 +40,12 @@ public class bConfigManager {
 	
 	private static void toChat() {
 		toChat.clear();
-		toChat = conf.getStringList("toChat.", toChat);
+		toChat = conf.getStringList("toChat.");
 	}
 	
 	private static void noCommand() {
 		noCommand.clear();
-		noCommand = conf.getStringList("noCommand.", noCommand);
+		noCommand = conf.getStringList("noCommand.");
 	}
 	
 	public static boolean isToChat(String message) {

@@ -2,12 +2,14 @@ package com.beecub.bLog;
 
 import java.util.logging.Logger;
 
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.event.player.PlayerListener;
 
 
-public class bLogPlayerListener extends PlayerListener {
+public class bLogPlayerListener implements Listener {
 	@SuppressWarnings("unused")
 	private final bLog plugin;
 	static Logger commlog;
@@ -17,7 +19,7 @@ public class bLogPlayerListener extends PlayerListener {
 		plugin = instance;
 	}
 
-	@Override	
+	@EventHandler (priority = EventPriority.LOW)
 	public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
         if (event.isCancelled()) {
             return;
@@ -40,8 +42,8 @@ public class bLogPlayerListener extends PlayerListener {
         	commlog.info(event.getPlayer().getName() + ": " + message);
         }
     }
-	
-	@Override
+
+	@EventHandler (priority = EventPriority.LOW)
 	public void onPlayerChat(PlayerChatEvent event) {
 		if (event.isCancelled()) {
             return;

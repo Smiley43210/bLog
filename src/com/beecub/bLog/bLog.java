@@ -1,11 +1,9 @@
 package com.beecub.bLog;
 
-import org.bukkit.event.Event;
-import org.bukkit.event.Event.Priority;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.util.config.Configuration;
+import org.bukkit.configuration.Configuration;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -29,8 +27,7 @@ public class bLog extends JavaPlugin {
 		pdfFile = this.getDescription();
 		
 		PluginManager pm = getServer().getPluginManager();
-		pm.registerEvent(Event.Type.PLAYER_COMMAND_PREPROCESS, playerListener, Priority.Low, this);
-		pm.registerEvent(Event.Type.PLAYER_CHAT, playerListener, Priority.Low, this);
+		pm.registerEvents(playerListener, this);
 		
 		PluginDescriptionFile pdfFile = this.getDescription();
 		log.info("[" +  pdfFile.getName() + "]" + " version " + pdfFile.getVersion() + " is enabled!" );
